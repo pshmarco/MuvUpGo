@@ -1,0 +1,738 @@
+:root {
+    --purple: #8A2BE2;
+    --light-purple: #B19CD9;
+    --white: #FFFFFF;
+    --dark-gray: #333333;
+    --light-gray: #F5F5F5;
+    --medium-gray: #AAAAAA;
+    --shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    --inner-glow: inset 0 0 10px rgba(255, 255, 255, 0.5);
+    --border-radius: 12px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+}
+
+body {
+    background-color: var(--light-gray);
+    color: var(--dark-gray);
+    font-size: 16px;
+    min-height: 100vh;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    max-width: 414px; /* iPhone dimensions */
+    margin: 0 auto;
+    border: 1px solid #ccc;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.app-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.main-content {
+    flex: 1;
+    overflow-y: auto;
+    padding-bottom: 80px;
+    position: relative;
+}
+
+.screen {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+    overflow-y: auto;
+    padding-bottom: 80px;
+}
+
+.screen.active {
+    opacity: 1;
+    pointer-events: auto;
+    position: relative;
+}
+
+.header {
+    background: linear-gradient(to bottom, var(--purple), var(--light-purple));
+    color: var(--white);
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 80px;
+    border-bottom-left-radius: var(--border-radius);
+    border-bottom-right-radius: var(--border-radius);
+    position: relative;
+}
+
+.back-arrow {
+    font-size: 1.2rem;
+    color: var(--white);
+}
+
+.logo {
+    font-weight: 900;
+    font-size: 2rem;
+    font-family: 'Rubik', sans-serif;
+    flex: 1;
+    text-align: center;
+}
+
+.notification-bell {
+    font-size: 1.35rem;
+}
+
+.user-subtitle {
+    text-align: center;
+    color: var(--medium-gray);
+    font-size: 0.9rem;
+    margin: 8px 0 16px;
+}
+
+.white-container {
+    background-color: var(--white);
+    border-radius: 24px 24px 0 0;
+    padding: 16px;
+    margin-top: -20px;
+    box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.start-button-container {
+    display: flex;
+    justify-content: center;
+    padding: 1.5rem 1rem;
+}
+
+.start-button {
+    background: linear-gradient(135deg, #9B59B6, #8A2BE2);
+    color: var(--white);
+    border: 4px solid var(--purple);
+    padding: 1rem 2.5rem;
+    border-radius: 20px;
+    font-weight: 900;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    transition: all 0.3s ease;
+    width: 90%;
+    max-width: 320px;
+    cursor: pointer;
+}
+
+.start-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.section-title {
+    font-weight: 900;
+    font-size: 1.1rem;
+    margin: 1rem;
+}
+
+.challenges-container {
+    display: flex;
+    justify-content: space-between;
+    background-color: var(--white);
+    border-radius: 16px;
+    border: 1px solid var(--light-gray);
+    padding: 12px;
+    margin: 0 16px 16px;
+}
+
+.challenge-pill {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+}
+
+.challenge-icon {
+    color: var(--purple);
+    font-size: 1.5rem;
+    margin-bottom: 6px;
+}
+
+.challenge-label {
+    color: var(--purple);
+    font-size: 0.8rem;
+    text-align: center;
+}
+
+.challenge-cards {
+    padding: 0 1rem;
+}
+
+.challenge-card {
+    background-color: var(--white);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    padding: 1.25rem;
+    margin: 1.5rem 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.challenge-info {
+    flex-grow: 1;
+    margin-left: 1rem;
+}
+
+.challenge-progress-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.challenge-progress-circle {
+    position: relative;
+    width: 50px;
+    height: 50px;
+}
+
+.challenge-progress-svg {
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+}
+
+.challenge-progress-circle circle {
+    fill: none;
+    stroke-width: 8;
+    stroke-linecap: round;
+}
+
+.challenge-progress-bg {
+    stroke: var(--light-gray);
+}
+
+.challenge-progress-fill {
+    stroke: url(#progressGradient);
+    transition: stroke-dasharray 0.5s ease;
+}
+
+.upload-evidence-btn {
+    background-color: var(--light-purple);
+    color: var(--white);
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    box-shadow: var(--shadow);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.progress-container {
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.progress-bar-container {
+    background-color: var(--light-gray);
+    border-radius: 20px;
+    height: 16px;
+    margin-bottom: 0.75rem;
+    overflow: hidden;
+}
+
+.progress-bar {
+    background: linear-gradient(to right, var(--light-purple), var(--purple));
+    height: 100%;
+    border-radius: 20px;
+    transition: width 0.8s ease;
+}
+
+.progress-percentage {
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--purple);
+    margin-bottom: 4px;
+}
+
+.progress-text {
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--medium-gray);
+}
+
+.navigation {
+    background-color: var(--white);
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    max-width: 414px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-around;
+    padding: 1rem 0;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.15);
+    height: 80px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    z-index: 100;
+}
+
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: var(--medium-gray);
+    text-decoration: none;
+    font-size: 0.7rem;
+    flex: 1;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.nav-item.active {
+    color: var(--purple);
+    font-weight: 700;
+}
+
+.nav-icon {
+    font-size: 1.75rem;
+    margin-bottom: 0.25rem;
+    transition: all 0.3s ease;
+}
+
+.nav-item.active .nav-icon {
+    transform: scale(1.1);
+}
+
+.streak-widget {
+    background: linear-gradient(135deg, #9B59B6, #8A2BE2);
+    color: var(--white);
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    padding: 1rem;
+    margin: 16px;
+    text-align: center;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.streak-widget::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('https://www.transparenttextures.com/patterns/dust.png');
+    opacity: 0.1;
+}
+
+.streak-icon-container {
+    position: relative;
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+}
+
+.streak-icon {
+    filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.8));
+    animation: pulse 1.5s infinite;
+}
+
+.streak-count {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1rem;
+    font-weight: 900;
+    color: var(--white);
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.streak-text {
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+.streak-accent {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    width: 100%;
+    background: linear-gradient(to right, var(--light-purple), var(--purple));
+    border-radius: 0 0 8px 8px;
+}
+
+/* Challenge screen */
+.challenges-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+}
+
+/* Progress screen */
+.progress-stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    padding: 1rem;
+}
+
+.stat-card {
+    background-color: var(--white);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    padding: 1rem;
+    text-align: center;
+}
+
+.stat-number {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--purple);
+    margin-bottom: 0.5rem;
+}
+
+.stat-label {
+    color: var(--medium-gray);
+    font-size: 0.9rem;
+}
+
+.weekly-progress {
+    background-color: var(--white);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    padding: 1rem;
+    margin: 1rem;
+}
+
+/* Messages screen */
+.message-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+}
+
+.message-item {
+    background-color: var(--white);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    padding: 1rem;
+    display: flex;
+    gap: 1rem;
+}
+
+.message-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: var(--light-gray);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--purple);
+    font-weight: 700;
+}
+
+.message-content {
+    flex: 1;
+}
+
+.message-sender {
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+}
+
+.message-preview {
+    color: var(--medium-gray);
+    font-size: 0.9rem;
+}
+
+.message-time {
+    font-size: 0.8rem;
+    color: var(--medium-gray);
+    text-align: right;
+}
+
+/* Profile screen */
+.profile-header {
+    background-color: var(--white);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    padding: 1.5rem;
+    margin: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profile-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: var(--light-gray);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--purple);
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.profile-name {
+    font-weight: 800;
+    font-size: 1.6rem;
+    margin-bottom: 0.6rem;
+    font-family: 'Rubik', sans-serif;
+}
+
+.profile-level {
+    background-color: var(--purple);
+    color: var(--white);
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+.collectibles-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    padding: 1rem;
+}
+
+.collectible-item {
+    background-color: var(--white);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--purple);
+    font-size: 2rem;
+}
+
+.history-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0 1rem 1rem 1rem;
+}
+
+.history-item {
+    background-color: var(--white);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.history-date {
+    font-size: 0.9rem;
+    color: var(--medium-gray);
+}
+
+.history-status {
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
+.status-completed {
+    color: #4CAF50;
+}
+
+.status-partial {
+    color: #FF9800;
+}
+
+.status-missed {
+    color: #F44336;
+}
+
+/* Settings screen */
+.settings-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+}
+
+.settings-item {
+    background-color: var(--white);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    padding: 1rem;
+}
+
+.settings-label {
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.toggle {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 24px;
+}
+
+.toggle input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--medium-gray);
+    border-radius: 24px;
+    transition: .4s;
+}
+
+.toggle-slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 4px;
+    bottom: 4px;
+    background-color: var(--white);
+    border-radius: 50%;
+    transition: .4s;
+}
+
+input:checked + .toggle-slider {
+    background-color: var(--purple);
+}
+
+input:checked + .toggle-slider:before {
+    transform: translateX(26px);
+}
+
+.settings-input {
+    width: 100%;
+    padding: 0.75rem;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--medium-gray);
+    margin-top: 0.5rem;
+}
+
+.settings-select {
+    width: 100%;
+    padding: 0.75rem;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--medium-gray);
+    margin-top: 0.5rem;
+}
+
+.reset-button {
+    background: linear-gradient(135deg, #9B59B6, #8A2BE2);
+    color: var(--white);
+    border: none;
+    padding: 0.75rem;
+    border-radius: 20px;
+    font-weight: 700;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.reset-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.challenge-complete-btn {
+    background: linear-gradient(135deg, #9B59B6, #8A2BE2);
+    color: var(--white);
+    border: none;
+    padding: 0.75rem;
+    border-radius: 20px;
+    font-weight: 700;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.challenge-complete-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.challenge-complete-icon {
+    font-size: 2rem;
+    color: #4CAF50;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Animation for completed challenges */
+@keyframes checkmark {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.2);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.checkmark-animation {
+    animation: checkmark 0.5s ease-in-out;
+}
