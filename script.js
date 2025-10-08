@@ -1,58 +1,92 @@
 document.addEventListener('DOMContentLoaded', function() {
     const navItems = document.querySelectorAll('.nav-item');
     const screens = document.querySelectorAll('.screen');
-    const startButton = document.getElementById('start-button');
+    const notificationBells = document.querySelectorAll('.notification-bell');
+    const backArrows = document.querySelectorAll('.back-arrow');
+    const startChallengeButton = document.getElementById('start-challenge-button');
+    const addFriendButton = document.querySelector('.add-friend-button');
+    const openRoutinesButton = document.getElementById('open-routines-button');
     const streakCount = document.getElementById('streak-count');
     const consecutiveDaysStat = document.getElementById('consecutive-days-stat');
-    const difficultySelect = document.getElementById('difficulty-select');
     const resetButton = document.getElementById('reset-button');
-    const dailyChallengesContainer = document.getElementById('daily-challenges');
-    const allChallengesContainer = document.getElementById('all-challenges');
+    const eventsListContainer = document.getElementById('events-list');
+    const friendsListContainer = document.getElementById('friends-list');
+    const collectiblesListContainer = document.querySelector('.collectibles-list');
+    const sunMuvPhraseElement = document.getElementById('sun-muv-phrase');
+    const routinesListContainer = document.getElementById('routines-list');
+    const routinesSectionTitle = document.querySelector('#routines-screen .section-title');
 
-    // Mapeo de desafíos por dificultad
-    const challenges = {
-        easy: [
-            { icon: 'fas fa-walking', title: 'Pasos', goal: '1,000 pasos hoy', type: 'steps' },
-            { icon: 'fas fa-music', title: 'Bailar', goal: '5 minutos de baile', type: 'dance' },
-            { icon: 'fas fa-seedling', title: 'Meditar', goal: '1 minuto de meditación', type: 'meditate' }
-        ],
-        medium: [
-            { icon: 'fas fa-walking', title: 'Pasos', goal: '5,000 pasos hoy', type: 'steps' },
-            { icon: 'fas fa-dumbbell', title: 'Fuerza', goal: '10 minutos de ejercicio', type: 'strength' },
-            { icon: 'fas fa-heartbeat', title: 'Resistencia', goal: '15 minutos de cardio', type: 'endurance' }
-        ],
-        hard: [
-            { icon: 'fas fa-running', title: 'Correr', goal: '5 km de trote', type: 'run' },
-            { icon: 'fas fa-swimmer', title: 'Nadar', goal: '20 minutos de natación', type: 'swim' },
-            { icon: 'fas fa-mountain', title: 'Escalada', goal: '10 metros de escalada', type: 'climb' }
-        ],
-        competitive: [
-            { icon: 'fas fa-medal', title: 'Triatlón', goal: 'Completar 30 min triatlón', type: 'triathlon' },
-            { icon: 'fas fa-bicycle', title: 'Ciclismo', goal: 'Subir 500m de elevación', type: 'bike' },
-            { icon: 'fas fa-bolt', title: 'Sprint', goal: 'Sprint de 100m en <12s', type: 'sprint' }
-        ]
-    };
+    // --- Data de la Aplicación ---
+    const allEvents = [
+        { title: 'Partido Basket 3v3', description: 'Torneo amistoso en la cancha central.', icon: 'fas fa-basketball-ball', cost: '$5.000 CLP', location: 'Gimnasio Quinta Normal', participants: '6/6 (Lleno)' },
+        { title: 'Clase de Yoga Matinal', description: 'Sesión de estiramiento y meditación.', icon: 'fas fa-seedling', cost: 'Gratis', location: 'Salón Las Condes', participants: '12/20' },
+        { title: 'Escalada (15 personas)', description: 'Ruta fácil para principiantes.', icon: 'fas fa-mountain', cost: 'Gratis (Para UChile)', location: 'Gimnasio Domeyko', participants: '10/15' },
+        { title: 'Carrera 5K Comunitaria', description: 'Ruta de 5km por el borde del río.', icon: 'fas fa-running', cost: 'Gratis', location: 'Ribera del Río, Ñuñoa', participants: '85 inscritos' }
+    ];
 
-    // Almacena el estado de los desafíos completados en localStorage
-    let completedChallenges = JSON.parse(localStorage.getItem('completedChallenges') || '[]');
-    let difficulty = localStorage.getItem('difficulty') || 'medium';
+    const friendsList = [
+        { name: 'Agustín Henríquez', status: 'Online', isFriend: true },
+        { name: 'Cristóbal Garrido', status: 'Online', isFriend: true },
+        { name: 'Marco Soto', status: 'Offline', isFriend: true },
+        { name: 'Martín Vilches', status: 'Online', isFriend: false },
+        { name: 'Vicente Colorín', status: 'Offline', isFriend: false },
+        { name: 'Huevito Rey', status: 'Online', isFriend: false }
+    ];
 
-    // Maneja la navegación entre pantallas
+    const collectibles = [
+        // Ícono actualizado a fa-futbol
+        { icon: 'fas fa-futbol', title: 'Futbolín', meta: 'Por participar en 10 eventos de Fútbol.' },
+        { icon: 'fas fa-heart', title: 'Fiel con la Racha', meta: 'Por completar 5 días de racha consecutivos.' },
+        { icon: 'fas fa-mountain', title: 'Listo para el Everest', meta: 'Por finalizar un evento de Escalada o Montaña.' },
+    ];
+
+    const sunMuvPhrases = [
+        "¡Tu cuerpo es capaz de cosas increíbles, solo dale el inicio!",
+        "¡Recuerda que cada paso cuenta, no te rindas!",
+        "La mejor vista viene después de la subida más dura. ¡Vamos por ello!",
+        "No necesitas ser perfecto para inspirar a otros. ¡Solo comienza!",
+        "El dolor de hoy será la fuerza de mañana. ¡Sigue moviéndote!"
+    ];
+    
+    // Nombres de rutinas simplificados
+    const routines = [
+        { title: 'Fuerza', exercises: '10x Sentadillas, 10x Flexiones, 20x Zancadas.' },
+        { title: 'Cardio', exercises: 'Saltos de Tijera, Rodillas al pecho, Escaladores.' },
+        { title: 'Core', exercises: 'Plancha, Crunches, Levantamiento de piernas.' },
+    ];
+    
+    // Actualizar título de Rutinas
+    if (routinesSectionTitle) {
+        routinesSectionTitle.textContent = 'Mis Rutinas';
+    }
+
+
+    // --- Funciones de Navegación ---
     function navigateTo(screenId) {
         navItems.forEach(nav => nav.classList.remove('active'));
         screens.forEach(screen => screen.classList.remove('active'));
-        
-        const targetNav = document.querySelector(`.nav-item[data-screen="${screenId}"]`);
-        if (targetNav) {
-            targetNav.classList.add('active');
-        }
         
         const targetScreen = document.getElementById(screenId);
         if (targetScreen) {
             targetScreen.classList.add('active');
         }
+
+        const targetNav = document.querySelector(`.nav-item[data-screen="${screenId}"]`);
+        if (targetNav) {
+            targetNav.classList.add('active');
+        } else if (screenId === 'friends-screen' || screenId === 'routines-screen') {
+            // Mantener la pestaña principal activa (Home o Events) si la navegación es a una sub-pantalla
+            if (screenId === 'friends-screen') {
+                 document.querySelector(`.nav-item[data-screen="home-screen"]`).classList.add('active');
+            } else if (screenId === 'routines-screen') {
+                 document.querySelector(`.nav-item[data-screen="challenges-screen"]`).classList.add('active');
+            }
+        } else {
+            document.querySelector(`.nav-item[data-screen="home-screen"]`).classList.add('active');
+        }
     }
 
+    // Navegación con los iconos de la barra inferior
     navItems.forEach(item => {
         item.addEventListener('click', function(e) {
             e.preventDefault();
@@ -60,161 +94,177 @@ document.addEventListener('DOMContentLoaded', function() {
             navigateTo(screenId);
         });
     });
-
-    // Nueva funcionalidad del botón "COMENZAR"
-    startButton.addEventListener('click', function() {
-        navigateTo('challenges-screen');
+    
+    // Navegación con la campana (a Mensajes)
+    notificationBells.forEach(bell => {
+        bell.addEventListener('click', () => navigateTo('messages-screen'));
     });
 
-    // Carga los desafíos al iniciar la aplicación
-    function loadChallenges(difficulty) {
-        const currentChallenges = challenges[difficulty];
-        dailyChallengesContainer.innerHTML = '';
-        allChallengesContainer.innerHTML = '';
+    // Navegación con flechas de retroceso
+    backArrows.forEach(arrow => {
+        arrow.addEventListener('click', function() {
+            const screenId = this.getAttribute('data-screen');
+            navigateTo(screenId);
+        });
+    });
 
-        currentChallenges.forEach(challenge => {
-            const isCompleted = completedChallenges.includes(challenge.type);
-            
-            // Renderiza el desafío en la pantalla de inicio
-            const homeCard = `
-                <div class="challenge-card">
-                    <div class="challenge-icon"><i class="${challenge.icon}"></i></div>
-                    <div class="challenge-info">
-                        <div class="challenge-title">${challenge.title}</div>
-                        <div class="challenge-goal">${challenge.goal}</div>
+    // Funcionalidad del botón "INICIAR DESAFÍO"
+    startChallengeButton.addEventListener('click', function() {
+        navigateTo('challenges-screen');
+    });
+    
+    // Funcionalidad del botón "AGREGAR AMIGO"
+    addFriendButton.addEventListener('click', function() {
+        navigateTo('friends-screen');
+    });
+    
+    // Funcionalidad del botón "Rutinas"
+    openRoutinesButton.addEventListener('click', function() {
+        navigateTo('routines-screen');
+    });
+
+    // --- Funciones de Renderizado ---
+    
+    // Renderiza la lista de eventos con las ubicaciones actualizadas
+    function renderEvents() {
+        eventsListContainer.innerHTML = '';
+        allEvents.forEach(event => {
+            const eventCard = `
+                <div class="event-card">
+                    <div class="event-top">
+                        <div class="event-info">
+                            <h3>${event.title}</h3>
+                            <p>${event.description}</p>
+                        </div>
+                        <div class="event-cost">${event.cost}</div>
                     </div>
-                    <div class="challenge-progress-container">
-                        <div class="challenge-progress-circle" data-challenge="${challenge.type}">
-                            <svg class="challenge-progress-svg">
-                                <circle class="challenge-progress-bg" cx="25" cy="25" r="20" />
-                                <circle class="challenge-progress-fill" cx="25" cy="25" r="20" stroke-dasharray="${isCompleted ? '125.6' : '0'} 125.6" />
-                            </svg>
-                            <button class="upload-evidence-btn" data-challenge="${challenge.type}">
-                                <i class="fas ${isCompleted ? 'fa-check' : 'fa-camera'}"></i>
-                            </button>
+                    <div class="event-details">
+                        <div class="event-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>${event.location}</span>
+                        </div>
+                        <div class="event-participants">
+                            <i class="fas fa-users"></i>
+                            <span>${event.participants}</span>
                         </div>
                     </div>
                 </div>
             `;
-            dailyChallengesContainer.innerHTML += homeCard;
+            eventsListContainer.innerHTML += eventCard;
+        });
+    }
 
-            // Renderiza el desafío en la pantalla de retos
-            const allCard = `
-                <div class="challenge-card">
-                    <div class="challenge-icon"><i class="${challenge.icon}"></i></div>
-                    <div class="challenge-info">
-                        <div class="challenge-title">${challenge.title}</div>
-                        <div class="challenge-goal">${challenge.goal}</div>
+    // Renderiza la lista de amigos (Dividido en Tus Bullas y Sugeridos)
+    function renderFriendsList() {
+        const myFriends = friendsList.filter(f => f.isFriend);
+        const suggestedFriends = friendsList.filter(f => !f.isFriend);
+
+        friendsListContainer.innerHTML = '';
+
+        // Render Tus Bullas
+        let friendsHtml = '';
+        myFriends.forEach(friend => {
+            friendsHtml += `
+                <div class="friend-item">
+                    <div class="friend-details">
+                        <div class="friend-avatar"><i class="fas fa-user"></i></div>
+                        <div>
+                            <div class="friend-name">${friend.name}</div>
+                            <div class="friend-status" style="color: ${friend.status === 'Online' ? '#4CAF50' : 'var(--medium-gray)'}">${friend.status}</div>
+                        </div>
                     </div>
-                    ${isCompleted ? 
-                        `<div class="challenge-complete-icon"><i class="fas fa-check-circle checkmark-animation"></i></div>` : 
-                        `<button class="challenge-complete-btn" data-challenge="${challenge.type}">Marcar completado</button>`
-                    }
+                    <button class="friend-action-btn">Mensaje</button>
                 </div>
             `;
-            allChallengesContainer.innerHTML += allCard;
         });
-
-        // Vuelve a añadir los listeners a los nuevos botones
-        attachEventListeners();
-    }
-
-    // Adjunta los listeners a los botones de desafío
-    function attachEventListeners() {
-        const challengeCompleteBtns = document.querySelectorAll('.challenge-complete-btn');
-        const uploadButtons = document.querySelectorAll('.upload-evidence-btn');
-
-        challengeCompleteBtns.forEach(button => {
-            button.addEventListener('click', function() {
-                const challengeType = this.getAttribute('data-challenge');
-                if (!completedChallenges.includes(challengeType)) {
-                    completedChallenges.push(challengeType);
-                    localStorage.setItem('completedChallenges', JSON.stringify(completedChallenges));
-                    updateProgressDisplay();
-                    loadChallenges(difficulty); // Recarga para actualizar el estado visual
-                }
-            });
-        });
-
-        uploadButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                const challengeType = this.getAttribute('data-challenge');
-                if (!completedChallenges.includes(challengeType)) {
-                    completedChallenges.push(challengeType);
-                    localStorage.setItem('completedChallenges', JSON.stringify(completedChallenges));
-                    updateProgressDisplay();
-                    loadChallenges(difficulty);
-                }
-            });
-        });
-    }
-
-    // Actualiza la visualización del progreso en la pantalla de inicio
-    function updateProgressDisplay() {
-        const totalChallenges = challenges[difficulty].length;
-        const completedCount = completedChallenges.length;
-        const progressPercentage = (completedCount / totalChallenges) * 100;
         
-        const progressBar = document.getElementById('daily-progress-bar');
-        const progressPercentageText = document.querySelector('.progress-percentage');
-        const progressText = document.querySelector('.progress-text');
-
-        if (progressBar && progressPercentageText && progressText) {
-            progressBar.style.width = `${progressPercentage}%`;
-            progressPercentageText.textContent = `${Math.round(progressPercentage)}%`;
-            progressText.textContent = completedCount === totalChallenges ? '¡Completado! 🎉' : '¡Sigue así!';
+        // Render Sugeridos
+        if (suggestedFriends.length > 0) {
+            friendsHtml += '<h2 class="section-title">Sugeridos</h2>';
+            suggestedFriends.forEach(friend => {
+                friendsHtml += `
+                    <div class="friend-item">
+                        <div class="friend-details">
+                            <div class="friend-avatar"><i class="fas fa-user"></i></div>
+                            <div>
+                                <div class="friend-name">${friend.name}</div>
+                                <div class="friend-status" style="color: ${friend.status === 'Online' ? '#4CAF50' : 'var(--medium-gray)'}">${friend.status}</div>
+                            </div>
+                        </div>
+                        <button class="friend-action-btn add-btn">Añadir</button>
+                    </div>
+                `;
+            });
         }
+
+        friendsListContainer.innerHTML = friendsHtml;
+    }
+    
+    // Renderiza los coleccionables con sus nuevos nombres y metas
+    function renderCollectibles() {
+        collectiblesListContainer.innerHTML = '';
+        collectibles.forEach(item => {
+            const collectibleItem = `
+                <div class="collectible-item">
+                    <div class="collectible-icon"><i class="${item.icon}"></i></div>
+                    <div class="collectible-info">
+                        <div class="collectible-title">${item.title}</div>
+                        <div class="collectible-meta">${item.meta}</div>
+                    </div>
+                </div>
+            `;
+            collectiblesListContainer.innerHTML += collectibleItem;
+        });
+    }
+    
+    // Renderiza las rutinas modelo
+    function renderRoutines() {
+        routinesListContainer.innerHTML = '';
+        routines.forEach(routine => {
+            const routineCard = `
+                <div class="routine-card">
+                    <div class="routine-details">
+                        <h3>${routine.title}</h3>
+                        <p>${routine.exercises}</p>
+                    </div>
+                    <button class="start-routine-btn">INICIAR</button>
+                </div>
+            `;
+            routinesListContainer.innerHTML += routineCard;
+        });
     }
 
+    // Sol Muv: Asigna una frase motivacional aleatoria
+    function updateSunMuv() {
+        const randomIndex = Math.floor(Math.random() * sunMuvPhrases.length);
+        sunMuvPhraseElement.textContent = sunMuvPhrases[randomIndex];
+    }
+    
     // Actualiza los días de racha
     function updateStreak() {
-        let currentStreak = parseInt(localStorage.getItem('streak') || 0);
-        const lastCompletionDate = localStorage.getItem('lastCompletionDate');
-        const today = new Date().toDateString();
-
-        if (lastCompletionDate === today) {
-            // Ya se ha completado hoy, no se hace nada
-        } else if (completedChallenges.length === challenges[difficulty].length) {
-            // Todos los retos del día anterior se completaron
-            const yesterday = new Date();
-            yesterday.setDate(yesterday.getDate() - 1);
-            if (lastCompletionDate === yesterday.toDateString()) {
-                currentStreak++;
-            } else {
-                currentStreak = 1; // Se reinicia si no se completó ayer
-            }
-            localStorage.setItem('streak', currentStreak);
-            localStorage.setItem('lastCompletionDate', today);
-        } else {
-            // Si no se han completado todos los desafíos del día, la racha se mantiene hasta el final del día
-        }
-
+        let currentStreak = parseInt(localStorage.getItem('streak') || 5);
         streakCount.textContent = currentStreak;
         consecutiveDaysStat.textContent = currentStreak;
     }
 
-    // Cambia los desafíos al seleccionar una dificultad
-    difficultySelect.addEventListener('change', function() {
-        difficulty = this.value;
-        localStorage.setItem('difficulty', difficulty);
-        completedChallenges = []; // Se reinician los desafíos al cambiar de dificultad
-        localStorage.setItem('completedChallenges', '[]');
-        loadChallenges(difficulty);
-        updateProgressDisplay();
-    });
+    // --- Event Listeners y Lógica ---
 
-    // Reinicia el progreso del día
+    // Reinicia el progreso
     resetButton.addEventListener('click', function() {
-        completedChallenges = [];
-        localStorage.setItem('completedChallenges', '[]');
-        loadChallenges(difficulty);
-        updateProgressDisplay();
-        alert('Progreso del día reiniciado.');
+        localStorage.setItem('streak', '0');
+        localStorage.removeItem('lastCompletionDate');
+        updateStreak();
+        alert('Racha y Progreso reiniciados (Simulación).');
     });
 
     // Inicialización
-    difficultySelect.value = difficulty; // Establece la dificultad guardada
-    loadChallenges(difficulty);
-    updateProgressDisplay();
+    renderEvents();
+    renderFriendsList();
+    renderCollectibles();
+    renderRoutines();
+    updateSunMuv();
     updateStreak();
+    
+    // Se asegura de que la pestaña de inicio esté activa al cargar
+    navigateTo('home-screen');
 });
