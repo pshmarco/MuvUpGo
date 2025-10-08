@@ -1,13 +1,16 @@
 :root {
-    --purple: #8A2BE2;
-    --light-purple: #B19CD9;
+    /* Paleta inspirada en los bocetos (Púrpura/Morado/Magenta) */
+    --primary: #9B59B6; /* Morado base */
+    --secondary: #8A2BE2; /* Azul violeta para acentos */
+    --accent: #FF5733; /* Color brillante para acción (rojo/naranja) */
+    --background: #F8F8F8; /* Fondo muy claro */
     --white: #FFFFFF;
-    --dark-gray: #333333;
-    --light-gray: #F5F5F5;
+    --dark-text: #333333;
     --medium-gray: #AAAAAA;
-    --shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-    --inner-glow: inset 0 0 10px rgba(255, 255, 255, 0.5);
-    --border-radius: 12px;
+    --light-gray: #E0E0E0;
+    --shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    --border-radius-lg: 20px;
+    --border-radius-sm: 10px;
 }
 
 * {
@@ -19,31 +22,31 @@
 }
 
 body {
-    background-color: var(--light-gray);
-    color: var(--dark-gray);
+    background-color: var(--background);
+    color: var(--dark-text);
     font-size: 16px;
+    /* Corrección: Asegura que el body no exceda la altura visible y evita el doble scroll */
     min-height: 100vh;
-    position: relative;
+    height: 100vh; /* Fuerza la altura del viewport */
     display: flex;
     flex-direction: column;
-    max-width: 414px; /* iPhone dimensions */
+    max-width: 414px; /* Simulación de dispositivo móvil */
     margin: 0 auto;
     border: 1px solid #ccc;
-    height: 100vh;
-    overflow: hidden;
+    overflow: hidden; /* Evita el scroll global del body */
 }
 
 .app-container {
     display: flex;
     flex-direction: column;
-    height: 100vh;
-    overflow: hidden;
+    height: 100%; /* Ocupa la altura completa del body */
+    overflow: hidden; /* Evita el scroll del container */
 }
 
 .main-content {
     flex: 1;
-    overflow-y: auto;
-    padding-bottom: 80px;
+    overflow-y: auto; /* Permite el scroll solo en el contenido principal */
+    padding-bottom: 80px; /* Espacio para la navegación */
     position: relative;
 }
 
@@ -55,7 +58,7 @@ body {
     left: 0;
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.5s ease;
+    transition: opacity 0.4s ease;
     overflow-y: auto;
     padding-bottom: 80px;
 }
@@ -66,76 +69,117 @@ body {
     position: relative;
 }
 
+/* --- ESTILOS DEL ENCABEZADO --- */
 .header {
-    background: linear-gradient(to bottom, var(--purple), var(--light-purple));
-    color: var(--white);
+    background-color: var(--white);
     padding: 1rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 80px;
-    border-bottom-left-radius: var(--border-radius);
-    border-bottom-right-radius: var(--border-radius);
-    position: relative;
+    height: 70px;
+    border-bottom: 1px solid var(--light-gray);
+    box-shadow: var(--shadow);
+    position: sticky; /* Fija el header */
+    top: 0;
+    z-index: 10;
+}
+
+.home-header {
+    background: linear-gradient(to right, var(--primary), var(--secondary));
+    color: var(--white);
+    border-bottom: none;
+    box-shadow: none;
 }
 
 .back-arrow {
     font-size: 1.2rem;
-    color: var(--white);
+    color: var(--dark-text);
+    cursor: pointer;
 }
 
 .logo {
     font-weight: 900;
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-family: 'Rubik', sans-serif;
+    color: var(--dark-text);
     flex: 1;
     text-align: center;
 }
 
-.notification-bell {
+.header .notification-bell {
     font-size: 1.35rem;
-}
-
-.user-subtitle {
-    text-align: center;
-    color: var(--medium-gray);
-    font-size: 0.9rem;
-    margin: 8px 0 16px;
-}
-
-.white-container {
-    background-color: var(--white);
-    border-radius: 24px 24px 0 0;
-    padding: 16px;
-    margin-top: -20px;
-    box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1);
-}
-
-.start-button-container {
-    display: flex;
-    justify-content: center;
-    padding: 1.5rem 1rem;
-}
-
-.start-button {
-    background: linear-gradient(135deg, #9B59B6, #8A2BE2);
-    color: var(--white);
-    border: 4px solid var(--purple);
-    padding: 1rem 2.5rem;
-    border-radius: 20px;
-    font-weight: 900;
-    font-size: 1.2rem;
-    text-transform: uppercase;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-    transition: all 0.3s ease;
-    width: 90%;
-    max-width: 320px;
+    color: var(--dark-text);
     cursor: pointer;
 }
 
-.start-button:hover {
-    transform: scale(1.05);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+.home-header .notification-bell {
+    color: var(--white);
+}
+
+/* Boceto 1 - Saludo */
+.profile-greeting {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.greeting-text {
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--white);
+}
+
+.greeting-icon {
+    font-size: 1.8rem;
+    color: var(--white);
+}
+
+/* --- ESTILOS HOME SCREEN --- */
+.activity-card {
+    background-color: var(--white);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow);
+    padding: 1.25rem;
+    margin: 1rem;
+}
+
+.activity-header {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--medium-gray);
+    margin-bottom: 0.75rem;
+}
+
+.activity-details {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.activity-icon {
+    font-size: 2rem;
+    color: var(--primary);
+}
+
+.activity-info {
+    flex-grow: 1;
+}
+
+.activity-title {
+    font-weight: 800;
+    font-size: 1.2rem;
+}
+
+.activity-points {
+    color: #4CAF50; /* Verde para puntos */
+    font-weight: 700;
+    font-size: 0.9rem;
+}
+
+.arrow-icon {
+    color: var(--medium-gray);
+    font-size: 1rem;
 }
 
 .section-title {
@@ -144,111 +188,436 @@ body {
     margin: 1rem;
 }
 
-.challenges-container {
+.start-button-container {
     display: flex;
-    justify-content: space-between;
-    background-color: var(--white);
-    border-radius: 16px;
-    border: 1px solid var(--light-gray);
-    padding: 12px;
-    margin: 0 16px 16px;
+    justify-content: center;
+    padding: 0 1rem 1rem 1rem;
 }
 
-.challenge-pill {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    flex: 1;
-}
-
-.challenge-icon {
-    color: var(--purple);
-    font-size: 1.5rem;
-    margin-bottom: 6px;
-}
-
-.challenge-label {
-    color: var(--purple);
-    font-size: 0.8rem;
-    text-align: center;
-}
-
-.challenge-cards {
-    padding: 0 1rem;
-}
-
-.challenge-card {
-    background-color: var(--white);
-    border-radius: var(--border-radius);
-    box-shadow: var(--shadow);
-    padding: 1.25rem;
-    margin: 1.5rem 0.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.challenge-info {
-    flex-grow: 1;
-    margin-left: 1rem;
-}
-
-.challenge-progress-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.challenge-progress-circle {
-    position: relative;
-    width: 50px;
-    height: 50px;
-}
-
-.challenge-progress-svg {
-    width: 100%;
-    height: 100%;
-    transform: rotate(-90deg);
-}
-
-.challenge-progress-circle circle {
-    fill: none;
-    stroke-width: 8;
-    stroke-linecap: round;
-}
-
-.challenge-progress-bg {
-    stroke: var(--light-gray);
-}
-
-.challenge-progress-fill {
-    stroke: url(#progressGradient);
-    transition: stroke-dasharray 0.5s ease;
-}
-
-.upload-evidence-btn {
-    background-color: var(--light-purple);
+.start-button {
+    background: var(--accent); /* Naranja/rojo del boceto */
     color: var(--white);
     border: none;
-    border-radius: 50%;
+    padding: 1rem 2.5rem;
+    border-radius: 10px;
+    font-weight: 900;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    box-shadow: 0 4px 8px rgba(255, 87, 51, 0.4);
+    width: 100%;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.start-button:active {
+    transform: scale(0.98);
+}
+
+/* Amigos Widget */
+.friends-widget {
+    background-color: var(--white);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow);
+    padding: 1.25rem;
+    margin: 0 1rem 1rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.friend-avatars {
+    display: flex;
+    gap: -10px; /* Superposición sutil */
+    align-items: center;
+}
+
+.friend-avatar {
     width: 40px;
     height: 40px;
+    border-radius: 50%;
+    background-color: var(--light-gray);
+    border: 2px solid var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--medium-gray);
     font-size: 1.2rem;
+    margin-left: -10px;
+}
+
+.friend-avatar:first-child {
+    margin-left: 0;
+}
+
+.add-friend-icon {
+    background-color: var(--primary);
+    color: var(--white);
+    font-size: 1rem;
+}
+
+.add-friend-button {
+    background: var(--secondary);
+    color: var(--white);
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    cursor: pointer;
+}
+
+/* Racha Widget */
+.streak-widget {
+    background: linear-gradient(135deg, var(--secondary), var(--primary));
+    color: var(--white);
+    border-radius: var(--border-radius-lg);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    padding: 1.5rem;
+    margin: 0 1rem 1rem 1rem;
+    text-align: center;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.streak-icon-container {
+    position: relative;
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+}
+
+.streak-icon {
+    filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5));
+    animation: pulse 1.5s infinite;
+}
+
+.streak-count {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.2rem;
+    font-weight: 900;
+    color: var(--white);
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+.streak-text {
+    font-weight: 700;
+    font-size: 1rem;
+    text-transform: uppercase;
+}
+
+.streak-accent {
+    height: 3px;
+    width: 100%;
+    background: var(--accent);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+
+/* --- ESTILOS HUB DE EVENTOS --- */
+.activity-pills {
+    display: flex;
+    justify-content: space-around;
+    padding: 0.5rem 1rem;
+    background-color: var(--white);
+    border-bottom: 1px solid var(--light-gray);
+    position: sticky;
+    top: 70px; /* Debajo del header */
+    z-index: 10;
+}
+
+.activity-pill {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background-color: var(--light-gray);
+    color: var(--medium-gray);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    transition: all 0.2s;
+    cursor: pointer;
+}
+
+.activity-pill.active-pill {
+    background-color: var(--primary);
+    color: var(--white);
+    box-shadow: var(--shadow);
+}
+
+/* Desafío Rutinas */
+.virtual-challenge-card {
+    background: var(--white);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow);
+    padding: 1.25rem;
+    margin: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+}
+
+.vcc-icon {
+    font-size: 2rem;
+    color: var(--secondary);
+    margin-right: 1rem;
+}
+
+.vcc-content {
+    flex-grow: 1;
+}
+
+.vcc-title {
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+.vcc-subtitle {
+    color: var(--medium-gray);
+    font-size: 0.9rem;
+}
+
+/* Eventos */
+.events-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 0 1rem 1rem 1rem;
+}
+
+.event-card {
+    background-color: var(--white);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow);
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.event-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 0.5rem;
+}
+
+.event-info h3 {
+    font-weight: 800;
+    font-size: 1.2rem;
+    margin-bottom: 0.25rem;
+}
+
+.event-info p {
+    color: var(--medium-gray);
+    font-size: 0.9rem;
+}
+
+.event-cost {
+    background-color: var(--accent);
+    color: var(--white);
+    padding: 0.25rem 0.75rem;
+    border-radius: 5px;
+    font-weight: 700;
+    font-size: 0.8rem;
+    white-space: nowrap;
+}
+
+.event-details {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+    padding-top: 0.5rem;
+    border-top: 1px dashed var(--light-gray);
+}
+
+.event-location, .event-participants {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: var(--dark-text);
+}
+
+.event-location i, .event-participants i {
+    color: var(--secondary);
+}
+
+/* --- ESTILOS PANTALLA DE RUTINAS --- */
+.routines-controls {
+    display: flex;
+    justify-content: space-around;
+    padding: 1rem;
+    gap: 1rem;
+}
+
+.control-button {
+    background-color: var(--primary);
+    color: var(--white);
+    border: none;
+    padding: 0.75rem 1rem;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    flex-grow: 1;
     cursor: pointer;
     box-shadow: var(--shadow);
     display: flex;
     align-items: center;
     justify-content: center;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    gap: 8px;
 }
 
-.progress-container {
+.routines-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 0 1rem 1rem 1rem;
+}
+
+.routine-card {
+    background-color: var(--white);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow);
+    padding: 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.routine-details h3 {
+    font-weight: 800;
+    font-size: 1.1rem;
+    margin-bottom: 0.25rem;
+}
+
+.routine-details p {
+    color: var(--medium-gray);
+    font-size: 0.9rem;
+}
+
+.start-routine-btn {
+    background-color: #4CAF50; /* Verde */
+    color: var(--white);
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    cursor: pointer;
+}
+
+/* --- ESTILOS PANTALLA DE PROGRESO (SOL MUV) --- */
+
+/* Nueva Mascota (Sol Muv) */
+.sun-muv-container {
+    background-color: var(--white);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow);
+    padding: 1.5rem 1rem;
+    margin: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    background: linear-gradient(135deg, var(--white) 60%, #FFFDE7);
+}
+
+.sun-muv-icon {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    color: #FFC107; /* Amarillo sol */
+    animation: float 4s ease-in-out infinite;
+}
+
+@keyframes float {
+	0% {
+		transform: translateY(0);
+	}
+	50% {
+		transform: translateY(-5px);
+	}
+	100% {
+		transform: translateY(0);
+	}
+}
+
+.sun-muv-phrase-box {
+    background-color: var(--light-gray);
+    border-radius: 10px;
+    padding: 10px 15px;
+    position: relative;
+    flex-grow: 1;
+}
+
+.sun-muv-phrase-box::before {
+    content: "";
+    position: absolute;
+    left: -10px;
+    top: 50%;
+    transform: translateY(-50%) rotate(45deg);
+    width: 20px;
+    height: 20px;
+    background-color: var(--light-gray);
+    clip-path: polygon(0% 50%, 100% 100%, 100% 0%);
+}
+
+.sun-muv-phrase {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--dark-text);
+}
+
+.progress-stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
     padding: 1rem;
-    margin-bottom: 1rem;
+}
+
+.stat-card {
+    background-color: var(--white);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow);
+    padding: 1rem;
+    text-align: center;
+}
+
+.stat-number {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+}
+
+.stat-label {
+    color: var(--medium-gray);
+    font-size: 0.9rem;
+}
+
+.weekly-progress {
+    background-color: var(--white);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow);
+    padding: 1rem;
+    margin: 1rem;
 }
 
 .progress-bar-container {
@@ -260,18 +629,10 @@ body {
 }
 
 .progress-bar {
-    background: linear-gradient(to right, var(--light-purple), var(--purple));
+    background: linear-gradient(to right, var(--primary), var(--secondary));
     height: 100%;
     border-radius: 20px;
     transition: width 0.8s ease;
-}
-
-.progress-percentage {
-    text-align: center;
-    font-size: 1.2rem;
-    font-weight: 700;
-    color: var(--purple);
-    margin-bottom: 4px;
 }
 
 .progress-text {
@@ -280,224 +641,178 @@ body {
     color: var(--medium-gray);
 }
 
-.navigation {
-    background-color: var(--white);
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    max-width: 414px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-around;
-    padding: 1rem 0;
-    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.15);
-    height: 80px;
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
-    z-index: 100;
-}
-
-.nav-item {
+.collectibles-list {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    color: var(--medium-gray);
-    text-decoration: none;
-    font-size: 0.7rem;
-    flex: 1;
-    text-align: center;
-    transition: all 0.3s ease;
-}
-
-.nav-item.active {
-    color: var(--purple);
-    font-weight: 700;
-}
-
-.nav-icon {
-    font-size: 1.75rem;
-    margin-bottom: 0.25rem;
-    transition: all 0.3s ease;
-}
-
-.nav-item.active .nav-icon {
-    transform: scale(1.1);
-}
-
-.streak-widget {
-    background: linear-gradient(135deg, #9B59B6, #8A2BE2);
-    color: var(--white);
-    border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    gap: 1rem;
     padding: 1rem;
-    margin: 16px;
-    text-align: center;
-    position: relative;
+}
+
+.collectible-item {
+    background-color: var(--white);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow);
+    padding: 1rem;
     display: flex;
-    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+/* CORRECCIÓN: Hace el ícono del coleccionable circular */
+.collectible-icon {
+    width: 50px;
+    height: 50px;
+    display: flex;
     align-items: center;
     justify-content: center;
-    overflow: hidden;
+    font-size: 2rem;
+    color: var(--primary);
+    border-radius: 50%; /* Asegura la forma circular */
+    background-color: var(--light-gray);
+    flex-shrink: 0;
 }
 
-.streak-widget::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: url('https://www.transparenttextures.com/patterns/dust.png');
-    opacity: 0.1;
+.collectible-info {
+    flex-grow: 1;
 }
 
-.streak-icon-container {
-    position: relative;
-    font-size: 3rem;
-    margin-bottom: 0.5rem;
-}
-
-.streak-icon {
-    filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.8));
-    animation: pulse 1.5s infinite;
-}
-
-.streak-count {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 1rem;
-    font-weight: 900;
-    color: var(--white);
-    text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-}
-
-@keyframes pulse {
-    0% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.1);
-    }
-    100% {
-        transform: scale(1);
-    }
-}
-
-.streak-text {
+.collectible-title {
     font-weight: 700;
     font-size: 1.1rem;
 }
 
-.streak-accent {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    height: 3px;
-    width: 100%;
-    background: linear-gradient(to right, var(--light-purple), var(--purple));
-    border-radius: 0 0 8px 8px;
-}
-
-/* Challenge screen */
-.challenges-list {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    padding: 1rem;
-}
-
-/* Progress screen */
-.progress-stats {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
-    padding: 1rem;
-}
-
-.stat-card {
-    background-color: var(--white);
-    border-radius: var(--border-radius);
-    box-shadow: var(--shadow);
-    padding: 1rem;
-    text-align: center;
-}
-
-.stat-number {
-    font-size: 2rem;
-    font-weight: 700;
-    color: var(--purple);
-    margin-bottom: 0.5rem;
-}
-
-.stat-label {
+.collectible-meta {
     color: var(--medium-gray);
     font-size: 0.9rem;
 }
 
-.weekly-progress {
-    background-color: var(--white);
-    border-radius: var(--border-radius);
-    box-shadow: var(--shadow);
-    padding: 1rem;
-    margin: 1rem;
-}
-
-/* Messages screen */
+/* --- ESTILOS PANTALLA DE MENSAJES (Formato) --- */
 .message-list {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 0.5rem;
     padding: 1rem;
 }
 
 .message-item {
     background-color: var(--white);
-    border-radius: var(--border-radius);
+    border-radius: var(--border-radius-lg);
     box-shadow: var(--shadow);
     padding: 1rem;
     display: flex;
-    gap: 1rem;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .message-avatar {
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
-    background-color: var(--light-gray);
+    background-color: var(--primary);
+    color: var(--white);
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--purple);
-    font-weight: 700;
+    font-size: 1.2rem;
+    margin-right: 1rem;
+    flex-shrink: 0;
 }
 
 .message-content {
-    flex: 1;
+    flex-grow: 1;
+    overflow: hidden;
 }
 
 .message-sender {
     font-weight: 700;
-    margin-bottom: 0.25rem;
+    font-size: 1rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .message-preview {
-    color: var(--medium-gray);
+    color: var(--dark-text);
     font-size: 0.9rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .message-time {
     font-size: 0.8rem;
     color: var(--medium-gray);
-    text-align: right;
+    margin-left: 1rem;
+    flex-shrink: 0;
 }
 
-/* Profile screen */
+
+/* --- ESTILOS PANTALLA DE AMIGOS (Estructura y Botones) --- */
+.friends-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0 1rem 1rem 1rem;
+}
+
+.friend-item {
+    background-color: var(--white);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow);
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.friend-details {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.friend-details .friend-avatar {
+    width: 45px;
+    height: 45px;
+    margin: 0;
+    font-size: 1.5rem;
+    background-color: var(--primary);
+    color: var(--white);
+    /* Asegura que los avatares de amigos sean circulares */
+    border-radius: 50%; 
+}
+
+.friend-name {
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+.friend-status {
+    color: #4CAF50; /* Online */
+    font-size: 0.85rem;
+}
+
+.friend-action-btn {
+    background-color: var(--secondary);
+    color: var(--white);
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    cursor: pointer;
+    flex-shrink: 0; /* Evita que el botón se comprima */
+}
+
+/* Estilo específico para el botón de Añadir */
+.friend-action-btn.add-btn {
+    background-color: var(--accent);
+}
+
+/* --- ESTILOS PANTALLA DE PERFIL --- */
 .profile-header {
     background-color: var(--white);
-    border-radius: var(--border-radius);
+    border-radius: var(--border-radius-lg);
     box-shadow: var(--shadow);
     padding: 1.5rem;
     margin: 1rem;
@@ -514,8 +829,8 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--purple);
-    font-size: 2rem;
+    color: var(--primary);
+    font-size: 3rem;
     margin-bottom: 1rem;
 }
 
@@ -527,7 +842,7 @@ body {
 }
 
 .profile-level {
-    background-color: var(--purple);
+    background-color: var(--secondary);
     color: var(--white);
     padding: 0.25rem 0.75rem;
     border-radius: 20px;
@@ -535,65 +850,6 @@ body {
     font-weight: 700;
 }
 
-.collectibles-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
-    padding: 1rem;
-}
-
-.collectible-item {
-    background-color: var(--white);
-    border-radius: var(--border-radius);
-    box-shadow: var(--shadow);
-    aspect-ratio: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--purple);
-    font-size: 2rem;
-}
-
-.history-list {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    padding: 0 1rem 1rem 1rem;
-}
-
-.history-item {
-    background-color: var(--white);
-    border-radius: var(--border-radius);
-    box-shadow: var(--shadow);
-    padding: 1rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.history-date {
-    font-size: 0.9rem;
-    color: var(--medium-gray);
-}
-
-.history-status {
-    font-size: 0.9rem;
-    font-weight: 700;
-}
-
-.status-completed {
-    color: #4CAF50;
-}
-
-.status-partial {
-    color: #FF9800;
-}
-
-.status-missed {
-    color: #F44336;
-}
-
-/* Settings screen */
 .settings-list {
     display: flex;
     flex-direction: column;
@@ -603,7 +859,7 @@ body {
 
 .settings-item {
     background-color: var(--white);
-    border-radius: var(--border-radius);
+    border-radius: var(--border-radius-lg);
     box-shadow: var(--shadow);
     padding: 1rem;
 }
@@ -651,88 +907,78 @@ body {
 }
 
 input:checked + .toggle-slider {
-    background-color: var(--purple);
+    background-color: var(--primary);
 }
 
 input:checked + .toggle-slider:before {
     transform: translateX(26px);
 }
 
-.settings-input {
-    width: 100%;
-    padding: 0.75rem;
-    border-radius: var(--border-radius);
-    border: 1px solid var(--medium-gray);
-    margin-top: 0.5rem;
-}
-
 .settings-select {
     width: 100%;
     padding: 0.75rem;
-    border-radius: var(--border-radius);
-    border: 1px solid var(--medium-gray);
+    border-radius: var(--border-radius-sm);
+    border: 1px solid var(--light-gray);
     margin-top: 0.5rem;
+    appearance: none; /* Oculta la flecha por defecto */
+    background: var(--white) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%239B59B6' class='bi bi-chevron-down' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E") no-repeat right 0.75rem center;
+    background-size: 16px;
 }
 
 .reset-button {
-    background: linear-gradient(135deg, #9B59B6, #8A2BE2);
+    background: var(--accent);
     color: var(--white);
     border: none;
     padding: 0.75rem;
-    border-radius: 20px;
+    border-radius: var(--border-radius-sm);
     font-weight: 700;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    box-shadow: var(--shadow);
     transition: all 0.3s ease;
     cursor: pointer;
+    width: 100%;
+    margin-top: 0.5rem;
 }
 
-.reset-button:hover {
-    transform: scale(1.05);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+/* --- CORRECCIÓN DE LA BARRA DE NAVEGACIÓN (QUITAR TEXTO) --- */
+.navigation {
+    background-color: var(--white);
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    max-width: 414px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-around;
+    padding: 1rem 0;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.15);
+    height: 80px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    z-index: 100;
 }
 
-.challenge-complete-btn {
-    background: linear-gradient(135deg, #9B59B6, #8A2BE2);
-    color: var(--white);
-    border: none;
-    padding: 0.75rem;
-    border-radius: 20px;
-    font-weight: 700;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: var(--medium-gray);
+    text-decoration: none;
+    font-size: 0; /* CORRECCIÓN CLAVE: Oculta el texto de los data-screen */
+    flex: 1;
+    text-align: center;
     transition: all 0.3s ease;
-    cursor: pointer;
 }
 
-.challenge-complete-btn:hover {
-    transform: scale(1.05);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+.nav-item.active {
+    color: var(--primary);
 }
 
-.challenge-complete-icon {
-    font-size: 2rem;
-    color: #4CAF50;
+.nav-icon {
+    font-size: 1.75rem;
+    transition: all 0.3s ease;
 }
 
-.hidden {
-    display: none;
-}
-
-/* Animation for completed challenges */
-@keyframes checkmark {
-    0% {
-        transform: scale(0);
-        opacity: 0;
-    }
-    50% {
-        transform: scale(1.2);
-        opacity: 1;
-    }
-    100% {
-        transform: scale(1);
-        opacity: 1;
-    }
-}
-
-.checkmark-animation {
-    animation: checkmark 0.5s ease-in-out;
+.nav-item.active .nav-icon {
+    transform: scale(1.1);
 }
