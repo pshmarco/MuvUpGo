@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>MuvUp Go!</title>
+
+    <link rel="icon" type="image/png" href="logotype.png"> 
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <div class="main-content">
+            
+            <div id="home-screen" class="screen active">
+                <header class="header home-header">
+                    <div class="profile-greeting">
+                        <div class="greeting-text">¡Hola Los bullas y el nuevo indio!</div>
+                        <div class="greeting-icon" data-screen="profile-screen"><i class="fas fa-user-circle"></i></div>
+                    </div>
+                    <div class="notification-bell"><i class="fas fa-bell"></i></div>
+                </header>
+                
+                <div class="activity-card">
+                    <div class="activity-header">TU ACTIVIDAD</div>
+                    <div class="activity-details">
+                        <div class="activity-icon"><i class="fas fa-running"></i></div>
+                        <div class="activity-info">
+                            <div class="activity-title">Carrera 2km</div>
+                            <div class="activity-points">150 puntos</div>
+                        </div>
+                        <i class="fas fa-chevron-right arrow-icon"></i>
+                    </div>
+                </div>
+
+                <h2 class="section-title">Amigos</h2>
+                <div class="friends-widget">
+                    <div class="friend-avatars">
+                        <div class="friend-avatar"><i class="fas fa-user"></i></div>
+                        <div class="friend-avatar"><i class="fas fa-user"></i></div>
+                        <div class="friend-avatar"><i class="fas fa-user"></i></div>
+                        <div class="friend-avatar add-friend-icon"><i class="fas fa-plus"></i></div>
+                    </div>
+                    <button class="add-friend-button" data-screen="friends-screen">AGREGAR AMIGO</button>
+                </div>
+                
+                <div class="start-button-container">
+                    <button class="start-button" id="start-challenge-button">INICIAR DESAFÍO</button>
+                </div>
+
+                <h2 class="section-title">Racha</h2>
+                <div class="streak-widget">
+                    <div class="streak-icon-container">
+                        <i class="fas fa-bolt streak-icon"></i>
+                        <span class="streak-count" id="streak-count">5</span>
+                    </div>
+                    <span class="streak-text">Días Consecutivos</span>
+                    <div class="streak-accent"></div>
+                </div>
+            </div>
+
+            <div id="challenges-screen" class="screen">
+                <header class="header">
+                <div class="logo-container">
+                        <div class="logo">HUB DE EVENTOS</div>
+                    </div>
+                    <div class="notification-bell"><i class="fas fa-bell"></i></div>
+                </header>
+                
+                <div class="activity-pills">
+                    <div class="activity-pill active-pill" data-filter="all" title="Mostrar Todos"><i class="fas fa-redo"></i></div>
+                    <div class="activity-pill" data-filter="running" title="Carreras"><i class="fas fa-running"></i></div>
+                    <div class="activity-pill" data-filter="yoga" title="Yoga"><i class="fas fa-hand-holding-heart"></i></div>
+                    <div class="activity-pill" data-filter="basketball" title="Baloncesto"><i class="fas fa-basketball-ball"></i></div>
+                    <div class="activity-pill" data-filter="soccer" title="Fútbol"><i class="fas fa-futbol"></i></div>
+                    <div class="activity-pill" data-filter="gym" title="Gym"><i class="fas fa-dumbbell"></i></div>
+                </div>
+
+                <div class="friends-filter-pills" id="friends-filter-pills">
+                    <div class="filter-pill active-filter" data-filter="all">Todos</div>
+                    <div class="filter-pill" data-filter="community">Comunidad</div>
+                    <div class="filter-pill" data-filter="friends">Amigos</div>
+                </div>
+                
+                <h2 class="section-title">En Casa</h2>
+                <div class="virtual-challenge-card" id="open-routines-button">
+                    <div class="vcc-icon"><i class="fas fa-home"></i></div>
+                    <div class="vcc-content">
+                        <div class="vcc-title">Rutinas</div>
+                        <div class="vcc-subtitle">Entrena con ejercicios de peso corporal.</div>
+                    </div>
+                    <i class="fas fa-chevron-right arrow-icon"></i>
+                </div>
+
+                <h2 class="section-title">Crear Evento</h2>
+                <div class="create-event-card" id="create-event-button">
+                    <div class="vcc-icon"><i class="fas fa-plus-circle"></i></div>
+                    <div class="vcc-content">
+                        <div class="vcc-title">Crear Nuevo Evento</div>
+                        <div class="vcc-subtitle">Organiza tu propio evento deportivo.</div>
+                    </div>
+                    <i class="fas fa-chevron-right arrow-icon"></i>
+                </div>
+
+                <h2 class="section-title">Eventos Cercanos</h2>
+                <div class="events-list" id="events-list">
+                    </div>
+            </div>
+            
+            <div id="routines-screen" class="screen">
+                <header class="header">
+                    <div class="back-arrow" data-screen="challenges-screen"><i class="fas fa-arrow-left"></i></div>
+                    <div class="logo-container">
+                        <div class="logo">Rutinas</div>
+                    </div>
+                    <div class="notification-bell"><i class="fas fa-bell"></i></div>
+                </header>
+                <div class="routines-controls">
+                    <button class="control-button"><i class="fas fa-plus"></i> Crear Rutina</button>
+                    <button class="control-button"><i class="fas fa-file-import"></i> Importar Rutina</button>
+                </div>
+                <h2 class="section-title">Mis Rutinas</h2>
+                <div class="routines-list" id="routines-list">
+                    </div>
+            </div>
+            
+            <div id="social-screen" class="screen">
+                <header class="header">
+                    <div class="logo-container">
+
+                        <div class="logo">Social Muv</div>
+                    </div>
+                    <div class="notification-bell"><i class="fas fa-bell"></i></div>
+                </header>
+                
+                <!-- Barra de Historias Simuladas -->
+                <div class="stories-bar">
+                    <div class="story-item">
+                        <div class="story-avatar your-story">
+                            <i class="fas fa-plus"></i>
+                        </div>
+                        <span class="story-label">Tu Historia</span>
+                    </div>
+                    <div class="story-item">
+                        <div class="story-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <span class="story-label">Agustín</span>
+                    </div>
+                    <div class="story-item">
+                        <div class="story-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <span class="story-label">Cristóbal</span>
+                    </div>
+                    <div class="story-item">
+                        <div class="story-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <span class="story-label">Marco</span>
+                    </div>
+                </div>
+                
+                <div class="social-feed" id="social-feed">
+                    </div>
+            </div>
+            
+            <div id="messages-screen" class="screen">
+                <header class="header">
+                    <div class="back-arrow" data-screen="home-screen"><i class="fas fa-arrow-left"></i></div>
+                    <div class="logo-container">
+
+                        <div class="logo">Mensajes</div>
+                    </div>
+                    </header>
+                <div class="message-list">
+                    <div class="message-item">
+                        <div class="message-avatar"><i class="fas fa-calendar-check"></i></div>
+                        <div class="message-content">
+                            <div class="message-sender">Cristobal Garrido</div>
+                            <div class="message-preview">Ha añadido un evento recientemente.</div>
+                        </div>
+                        <div class="message-time">Hoy</div>
+                    </div>
+                    <div class="message-item">
+                        <div class="message-avatar"><i class="fas fa-level-up-alt"></i></div>
+                        <div class="message-content">
+                            <div class="message-sender">MuvUp Go! Equipo</div>
+                            <div class="message-preview">¡Felicidades! Has subido al Nivel 6.</div>
+                        </div>
+                        <div class="message-time">Hace 1h</div>
+                    </div>
+                    <div class="message-item">
+                        <div class="message-avatar"><i class="fas fa-user-plus"></i></div>
+                        <div class="message-content">
+                            <div class="message-sender">Solicitud Pendiente</div>
+                            <div class="message-preview">Huevito Rey te ha enviado solicitud de amistad.</div>
+                        </div>
+                        <div class="message-time">Ayer</div>
+                    </div>
+                    <div class="message-item">
+                        <div class="message-avatar"><i class="fas fa-trophy"></i></div>
+                        <div class="message-content">
+                            <div class="message-sender">Nuevo Evento</div>
+                            <div class="message-preview">¡El Basket 3v3 ya está abierto para inscripciones!</div>
+                        </div>
+                        <div class="message-time">Ayer</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="friends-screen" class="screen">
+                <header class="header">
+                    <div class="back-arrow" data-screen="home-screen"><i class="fas fa-arrow-left"></i></div>
+                    <div class="logo-container">
+
+                        <div class="logo">Lista de Amigos</div>
+                    </div>
+                    <div class="notification-bell"><i class="fas fa-bell"></i></div>
+                </header>
+                <div class="friends-list" id="friends-list">
+                    </div>
+            </div>
+
+            <div id="map-screen" class="screen">
+                <header class="header">
+                    <div class="logo-container">
+
+                        <div class="logo">Mapa de Eventos</div>
+                    </div>
+                    <div class="map-controls">
+                        </button>
+                        <div class="notification-bell"><i class="fas fa-bell"></i></div>
+                    </div>
+                </header>
+                
+                <div class="map-simulation" id="map-container">
+                    </div>
+                
+                <div id="map-info-panel" class="map-info-panel hidden">
+                    <h3 id="map-event-title"></h3>
+                    <p id="map-event-location"></p>
+                    <button id="map-go-to-event" class="start-button">VER EN HUB</button>
+                </div>
+            </div>
+
+            <div id="profile-screen" class="screen">
+                <header class="header">
+                    <div class="logo-container">
+
+                        <div class="logo">Perfil y Progreso</div>
+                    </div>
+                    <div class="notification-bell"><i class="fas fa-bell"></i></div>
+                </header>
+                
+                <div class="profile-header">
+                    <div class="profile-avatar"><i class="fas fa-user"></i></div>
+                    <div class="profile-name">Los bullas y el nuevo indio</div>
+                    <div class="profile-level">Nivel 5 <span id="level-character"></span></div> 
+                </div>
+                
+                <h2 class="section-title">Mi Progreso</h2>
+                <div class="sun-muv-container">
+                    <div class="sun-muv-icon">
+                        <i class="fas fa-sun"></i>
+                    </div>
+                    <div class="sun-muv-phrase-box">
+                        <div class="sun-muv-phrase" id="sun-muv-phrase"></div>
+                    </div>
+                </div>
+                
+                <div class="progress-stats">
+                    <div class="stat-card">
+                        <div class="stat-number" id="consecutive-days-stat">5</div>
+                        <div class="stat-label">Días de Racha</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">32</div>
+                        <div class="stat-label">Eventos Completados</div>
+                    </div>
+                </div>
+                
+                <h2 class="section-title">Coleccionables</h2>
+                <div class="collectibles-list" id="collectibles-list-container">
+                    </div>
+                
+                <h2 class="section-title">Configuración</h2>
+                <div class="settings-item">
+                    <div class="settings-label">Notificaciones diarias</div>
+                    <label class="toggle">
+                        <input type="checkbox" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>     
+                <div class="settings-item">
+                    <div class="settings-label">Modo Oscuro</div> 
+                    <label class="toggle">
+                        <input type="checkbox" id="dark-mode-toggle">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+                <h2 class="section-title">Sistema</h2>
+                <div class="settings-list">
+                    <div class="settings-item">
+                        <button class="reset-button" id="reset-button">Reiniciar Racha y Progreso</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <nav class="navigation">
+            <a href="#" class="nav-item" data-screen="challenges-screen">
+                <div class="nav-icon"><i class="fas fa-tasks"></i></div>
+            </a>
+            <a href="#" class="nav-item" data-screen="map-screen">
+                <div class="nav-icon"><i class="fas fa-map"></i></div>
+            </a>
+            <a href="#" class="nav-item active" data-screen="home-screen">
+                <div class="nav-icon"><i class="fas fa-home"></i></div>
+            </a>
+            <a href="#" class="nav-item" data-screen="social-screen">
+                <div class="nav-icon"><i class="fas fa-users"></i></div>
+            </a>
+            <a href="#" class="nav-item" data-screen="profile-screen">
+                <div class="nav-icon"><i class="fas fa-user"></i></div>
+            </a>
+        </nav>
+    </div>
+
+    <!-- Modal para crear evento -->
+    <div id="create-event-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Crear Nuevo Evento</h2>
+                <button class="close-modal" id="close-create-event">&times;</button>
+            </div>
+            <form id="create-event-form">
+                <div class="form-group">
+                    <label for="event-name">Nombre del Evento</label>
+                    <input type="text" id="event-name" required placeholder="Ej: Fútbol 7">
+                </div>
+                
+                <div class="form-group">
+                    <label for="event-price">Precio</label>
+                    <input type="text" id="event-price" required placeholder="Ej: $5.000 CLP">
+                </div>
+                
+                <div class="form-group">
+                    <label for="event-description">Descripción Breve</label>
+                    <textarea id="event-description" required placeholder="Describe tu evento..."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="event-location">Lugar</label>
+                    <input type="text" id="event-location" required placeholder="Ej: Cancha Juan Perez">
+                </div>
+                
+                <div class="form-group">
+                    <label for="event-date">Fecha del Evento</label>
+                    <input type="date" id="event-date" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="event-category">Categoría</label>
+                    <select id="event-category" required>
+                        <option value="">Selecciona la categoría</option>
+                        <option value="running">Carreras</option>
+                        <option value="yoga">Yoga</option>
+                        <option value="basketball">Baloncesto</option>
+                        <option value="soccer">Fútbol</option>
+                        <option value="gym">Gym</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Límite de Personas</label>
+                    <div class="limit-options">
+                        <button type="button" class="limit-btn" id="unlimited-btn" data-limit="unlimited">Sin Límite</button>
+                        <button type="button" class="limit-btn" id="limited-btn" data-limit="limited">Personas Limitadas</button>
+                    </div>
+                    <div class="limit-input-container hidden" id="limit-input-container">
+                        <input type="number" id="event-limit-number" placeholder="Ej: 10" min="1" max="100">
+                        <span class="limit-label">personas máximo</span>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="event-type">Tipo de Evento</label>
+                    <select id="event-type" required>
+                        <option value="community">Comunidad (Público)</option>
+                        <option value="friends">Solo Amigos</option>
+                    </select>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="cancel-btn" id="cancel-create-event">Cancelar</button>
+                    <button type="submit" class="create-btn">Crear Evento</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
