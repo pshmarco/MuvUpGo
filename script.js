@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded', function() {
         "No te compares con los demás, compárate contigo mismo",
         "La vida es un 10% lo que te pasa y un 90% cómo te comportas",
         "No esperes que pase la tormenta, aprende a bailar bajo la lluvia",
-        "El humano solamente vive dos vidas, y la segundaempieza el dia que se da cuenta que tiene una sola",
+        "El humano solamente vive dos vidas, y la segunda empieza el dia que se da cuenta que tiene una sola",
         "Si no destacas por talento, hazlo por disciplina hasta que parezca que naciste para ello"
     ];
 
