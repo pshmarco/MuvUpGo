@@ -54,14 +54,28 @@ document.addEventListener('DOMContentLoaded', function() {
     let currentActivityFilter = 'all';
     let currentFriendFilter = 'all';
 
-    const allEvents = [
-        { title: 'FutCristobal', description: 'Para hacer deporte :D', icon: 'fas fa-futbol', cost: 'Gratis', location: 'Cancha -3 851', participants: '2/14', tag: 'soccer', isFriendEvent: true, mapCoords: { top: '15%', left: '75%' } },
-        { title: 'Torneo Basket 3v3', description: 'Torneo amistoso benéfico.', icon: 'fas fa-basketball-ball', cost: '$5.000 CLP', location: 'Gimnasio Quinta Normal', participants: '6/6 (Lleno)', tag: 'basketball', isFriendEvent: false, mapCoords: { top: '30%', left: '20%' } },
-        { title: 'Clase de Yoga Matinal', description: 'Sesión de estiramiento y meditación.', icon: 'fas fa-hand-holding-heart', cost: 'Gratis', location: 'Salón MACVM', participants: '12/20', tag: 'yoga', isFriendEvent: false, mapCoords: { top: '65%', left: '70%' } },
-        { title: 'Gym (asesorado)', description: 'Ruta fácil para principiantes.', icon: 'fas fa-dumbbell', cost: 'Gratis (Para UChile)', location: 'Gimnasio -3 851', participants: '10/15', tag: 'gym', isFriendEvent: false, mapCoords: { top: '10%', left: '80%' } },
-        { title: 'Carrera 5K Comunitaria', description: 'Ruta de 5km por el borde del río.', icon: 'fas fa-running', cost: 'Gratis', location: 'Cajón del Maipo', participants: '85 inscritos', tag: 'running', isFriendEvent: false, mapCoords: { top: '80%', left: '45%' } },
-        { title: 'Pichanga de Fin de Semana', description: 'Fútbol amateur en la cancha del barrio.', icon: 'fas fa-futbol', cost: '$1.000 CLP', location: 'Cancha Pajaritos', participants: '15/22', tag: 'soccer', isFriendEvent: false, mapCoords: { top: '50%', left: '50%' } }
-    ];
+const allEvents = [
+    // 🎯 NUEVO: EVENTO FIJO DE LA SEMANA (¡Seguro y en Casa!) 🎯
+    {
+        id: 'weekly-home-challenge',
+        title: 'Burpees & Sentadillas',
+        type: 'community', // Tipo: para que no se filtre con 'Solo Amigos'
+        tag: 'general', // Etiqueta: para que se muestre con el filtro 'Todo'
+        description: '¡Mantente activo y seguro! Entrena desde casa para ganar progreso extra esta semana.',
+        date: 'Cada Semana',
+        location: 'Tu Casa (Virtual)',
+        participants: 'Tú mismo ⭐',
+        isWeeklyEvent: true // PROPIEDAD CLAVE para reconocerlo en el renderizado
+    },
+    // -------------------------------------------------------------
+    // TUS EVENTOS ANTERIORES (ahora en la segunda posición en adelante)
+    { title: 'FutCristobal', description: 'Para hacer deporte :D', icon: 'fas fa-futbol', cost: 'Gratis', location: 'Cancha -3 851', participants: '2/14', tag: 'soccer', isFriendEvent: true, mapCoords: { top: '15%', left: '75%' } },
+    { title: 'Torneo Basket 3v3', description: 'Torneo amistoso benéfico.', icon: 'fas fa-basketball-ball', cost: '$5.000 CLP', location: 'Gimnasio Quinta Normal', participants: '6/6 (Lleno)', tag: 'basketball', isFriendEvent: false, mapCoords: { top: '30%', left: '20%' } },
+    { title: 'Clase de Yoga Matinal', description: 'Sesión de estiramiento y meditación.', icon: 'fas fa-hand-holding-heart', cost: 'Gratis', location: 'Salón MACVM', participants: '12/20', tag: 'yoga', isFriendEvent: false, mapCoords: { top: '65%', left: '70%' } },
+    { title: 'Gym (asesorado)', description: 'Ruta fácil para principiantes.', icon: 'fas fa-dumbbell', cost: 'Gratis (Para UChile)', location: 'Gimnasio -3 851', participants: '10/15', tag: 'gym', isFriendEvent: false, mapCoords: { top: '10%', left: '80%' } },
+    { title: 'Carrera 5K Comunitaria', description: 'Ruta de 5km por el borde del río.', icon: 'fas fa-running', cost: 'Gratis', location: 'Cajón del Maipo', participants: '85 inscritos', tag: 'running', isFriendEvent: false, mapCoords: { top: '80%', left: '45%' } },
+    { title: 'Pichanga de Fin de Semana', description: 'Fútbol amateur en la cancha del barrio.', icon: 'fas fa-futbol', cost: '$1.000 CLP', location: 'Cancha Pajaritos', participants: '15/22', tag: 'soccer', isFriendEvent: false, mapCoords: { top: '50%', left: '50%' } }
+];
 
     const friendsList = [
         { name: 'Agustín Henríquez', status: 'Online', isFriend: true },
@@ -96,7 +110,7 @@ document.addEventListener('DOMContentLoaded', function() {
         "No te compares con los demás, compárate contigo mismo",
         "La vida es un 10% lo que te pasa y un 90% cómo te comportas",
         "No esperes que pase la tormenta, aprende a bailar bajo la lluvia",
-        "El humano solamente vive dos vidas, y la segunda empieza el dia que se da cuenta que tiene una sola",
+        "El humano solamente vive dos vidas, y la segundaempieza el dia que se da cuenta que tiene una sola",
         "Si no destacas por talento, hazlo por disciplina hasta que parezca que naciste para ello"
     ];
 
@@ -154,56 +168,109 @@ function toggleDarkMode() {
     
     // --- 3.2 Funciones de Renderizado ---
     
-    // Renderiza la lista de eventos con la funcionalidad de filtro
-    function renderEvents() {
-        eventsListContainer.innerHTML = '';
-        
-        allEvents.forEach(event => {
-            const matchesActivity = currentActivityFilter === 'all' || event.tag === currentActivityFilter;
-            
-            let matchesFriendship;
-            if (currentFriendFilter === 'all') {
-                matchesFriendship = true;
-            } else if (currentFriendFilter === 'community') {
-                matchesFriendship = !event.isFriendEvent; 
-            } else if (currentFriendFilter === 'friends') {
-                matchesFriendship = event.isFriendEvent;
-            }
+// En script.js, a partir de la línea 158
 
-            const isVisible = matchesActivity && matchesFriendship;
-            
-            const eventCard = document.createElement('div');
-            eventCard.classList.add('event-card');
-            eventCard.classList.toggle('hidden-event', !isVisible);
-            eventCard.classList.toggle('is-friend', event.isFriendEvent);
-            eventCard.setAttribute('data-tag', event.tag);
-            
-            const friendIndicator = event.isFriendEvent ? 
-                `<p style="color: var(--secondary); font-weight: 700;">¡Evento de un Bulla!</p>` : 
-                `<p>${event.description}</p>`;
-            
-            eventCard.innerHTML = `
-                <div class="event-top">
-                    <div class="event-info">
-                        <h3>${event.title}</h3>
-                        ${friendIndicator}
-                    </div>
-                    <div class="event-cost">${event.cost}</div>
-                </div>
-                <div class="event-details">
-                    <div class="event-location">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <span>${event.location}</span>
-                    </div>
-                    <div class="event-participants">
-                        <i class="fas fa-users"></i>
-                        <span>${event.participants}</span>
-                    </div>
-                </div>
-            `;
-            eventsListContainer.appendChild(eventCard);
-        });
+// Renderiza la lista de eventos con la funcionalidad de filtro
+function renderEvents() {
+    // 1. Identificar el evento fijo y separar los eventos dinámicos
+    const fixedEvent = allEvents.find(event => event.isWeeklyEvent); // Busca el evento semanal
+    let dynamicEvents = allEvents.filter(event => !event.isWeeklyEvent); // Deja solo los demás (los que se filtran)
+    
+    // Limpia el contenedor, ¡es crucial para el nuevo orden!
+    eventsListContainer.innerHTML = ''; 
+    
+    // 2. Comprobar y Mostrar PRIMERO el Evento Fijo
+    // Se muestra si el filtro de actividad es 'all' o 'general' (lo que definimos para el evento en casa)
+    const isFilterCompatibleWithFixedEvent = currentActivityFilter === 'all' || currentActivityFilter === 'general';
+
+    if (fixedEvent && isFilterCompatibleWithFixedEvent) {
+        // Creamos la tarjeta del evento fijo
+        const fixedCard = createEventCardDOM(fixedEvent, true); // Usamos una nueva función para crear el DOM
+        eventsListContainer.appendChild(fixedCard);
     }
+    
+    // 3. Filtrar y Mostrar los Eventos Dinámicos
+    let dynamicEventsFound = false;
+
+    dynamicEvents.forEach(event => {
+        // Lógica de filtro:
+        const matchesActivity = currentActivityFilter === 'all' || event.tag === currentActivityFilter;
+        let matchesFriendship;
+        if (currentFriendFilter === 'all') {
+            matchesFriendship = true;
+        } else if (currentFriendFilter === 'community') {
+            // Un evento NO es de amigo. El evento fijo ya fue manejado.
+            matchesFriendship = !event.isFriendEvent; 
+        } else if (currentFriendFilter === 'friends') {
+            matchesFriendship = event.isFriendEvent;
+        }
+        
+        const isVisible = matchesActivity && matchesFriendship;
+        
+        if (isVisible) {
+            const eventCard = createEventCardDOM(event, false); // Creamos la tarjeta dinámica
+            eventsListContainer.appendChild(eventCard);
+            dynamicEventsFound = true;
+        }
+    });
+
+    // 4. Manejo de lista vacía
+    if (!dynamicEventsFound && (!fixedEvent || !isFilterCompatibleWithFixedEvent)) {
+         // ... (Tu código para mostrar el mensaje de "No hay eventos" si aplica) ...
+    }
+}
+
+
+// En script.js, alrededor de la línea 147 (Reemplaza la función completa)
+function createEventCardDOM(event, isFixedEvent) {
+    const eventCard = document.createElement('div');
+    eventCard.classList.add('event-card');
+    
+    // Añadimos una clase especial si es el evento fijo para darle un estilo único
+    if (isFixedEvent) {
+        eventCard.classList.add('fixed-weekly-event'); 
+    }
+    
+    eventCard.classList.toggle('is-friend', event.isFriendEvent);
+    eventCard.setAttribute('data-tag', event.tag);
+    
+    // El indicador para el evento de un 'Bulla' o para el evento fijo
+    let indicatorHTML;
+    if (isFixedEvent) {
+        // Mantiene tu texto modificado 'Reto del Día 🏆'
+        indicatorHTML = `<p style="color: var(--accent); font-weight: 700;"> Reto del Día 🏆</p>`; 
+    } else if (event.isFriendEvent) {
+        indicatorHTML = `<p style="color: var(--secondary); font-weight: 700;">¡Evento de un Bulla!</p>`;
+    } else {
+        indicatorHTML = `<p>${event.description}</p>`;
+    }
+    
+    // 🎯 CORRECCIÓN CLAVE: Define el costo
+    // Usa 'event.cost' si existe; si es nulo o indefinido, usa 'Gratis'.
+    const eventCost = event.cost || 'Unirme'; 
+    // ------------------------------------
+
+    eventCard.innerHTML = `
+        <div class="event-top">
+            <div class="event-info">
+                <h3>${event.title}</h3>
+                ${indicatorHTML}
+            </div>
+            <div class="event-cost">${eventCost}</div>
+        </div>
+        <div class="event-details">
+            <div class="event-location">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>${event.location}</span>
+            </div>
+            <div class="event-participants">
+                <i class="fas fa-users"></i>
+                <span>${event.participants}</span>
+            </div>
+        </div>
+    `;
+    return eventCard;
+}
 
     // Renderiza la lista de amigos
     function renderFriendsList() {
