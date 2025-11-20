@@ -1,5 +1,5 @@
 {
-  "name": "MuvUp Go! (Prototipo)",
+  "name": "MuvUp Go!",
   "short_name": "MuvUp",
   "description": "Tu aplicación social de actividades y rutinas.",
   "start_url": "./index.html",
@@ -18,4 +18,5 @@
       "type": "image/png"
     }
   ]
+
 }
